@@ -6,8 +6,17 @@ public:
 	Node* root;
 
 	Trie();
-	void Insert(string word, int location);
 	~Trie();
+
+	void Insert(string word, int location);
 	void deleteaAll(Node*);// help recursive function to Dtor
+
+	list<int> search(string strToSearch);
+
+	//2 help function to search
+	Node* searchNode(string strToSearch);
+	list<int> preOrder(Node* root);
+
+
 };
 
