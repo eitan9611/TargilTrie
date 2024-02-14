@@ -34,7 +34,10 @@ int main() {
     Node b(false,a,myMap);
     Node* c = &b;
     Trie k;
-    k.root = c;
-    k.Insert("stom");
+ 
+    k.Insert("stom", 7);
+    k.Insert("satum", 8);
+    k.Insert("stok", 5);
+
     return 0;
 }

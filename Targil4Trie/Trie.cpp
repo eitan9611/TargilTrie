@@ -37,7 +37,23 @@ void Trie::Insert(string word, int location)
 
 Trie::~Trie()
 {
+	//go over all the nodes in the tree and delete them
+	deleteaAll(root);
+}
 
+void Trie::deleteaAll(Node* root)
+{
+	if (root != nullptr) //if the node isn't leaf
+	{
+		//for each node ran over its sons and delete it
+		map <char, Node*> myMap = root->mapOfSons;
+		for (auto it = myMap.begin(); it != myMap.end(); ++it)
+		{
+			deleteaAll(it->second);
+		}
+		delete root;
+		root = nullptr;
+	}
 }
 
 	

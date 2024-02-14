@@ -8,5 +8,6 @@ public:
 	Trie();
 	void Insert(string word, int location);
 	~Trie();
+	void deleteaAll(Node*);// help recursive function to Dtor
 };
 
