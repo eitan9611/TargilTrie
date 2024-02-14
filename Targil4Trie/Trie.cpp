@@ -1,5 +1,10 @@
 #include "Trie.h"
 
+Trie::Trie()
+{
+	root = new Node();
+}
+
 void Trie::Insert(string word, int location)
 {
 	Node* current = this->root;
