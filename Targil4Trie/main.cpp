@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Book.h"
+#include "Node.h"
 using namespace std;
 
 int main() {
@@ -26,6 +27,5 @@ int main() {
             book.censorQuery(prefix);
         }
     }
-
     return 0;
 }
