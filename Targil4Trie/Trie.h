@@ -7,6 +7,5 @@ public:
 
 	Trie(Node* _root);
 	void Insert(string word, int location);
-
 };
 
