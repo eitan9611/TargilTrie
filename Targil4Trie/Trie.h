@@ -15,7 +15,7 @@ public:
 
 	//2 help function to search
 	Node* searchNode(string strToSearch);
-	list<int> preOrder(Node* root);
+	list<int> preOrder(Node* root, list<int>& locationsList, int& numOfNodes, int& numOfNodesVisit);
 
 
 };

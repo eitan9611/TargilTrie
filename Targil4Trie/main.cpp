@@ -36,8 +36,14 @@ int main() {
     Trie k;
  
     k.Insert("stom", 7);
+    k.Insert("stom", 12);
     k.Insert("satum", 8);
     k.Insert("stok", 5);
+
+    list<int> loc = k.search("st");
+
+    for (list<int>::iterator it = loc.begin(); it != loc.end(); it++)
+        cout << *it << " ";
 
     return 0;
 }
