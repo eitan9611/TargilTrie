@@ -58,12 +58,20 @@ void Trie::deleteaAll(Node* root)
 
 list<int> Trie::search(string strToSearch)
 {
-	list<int> emptyList;
+	list<int> locationslist;
+	int counter = 0, numOfVisit = 1;
 	Node* found = searchNode(strToSearch);
 
 	//if found isn't null - get 3 words from the subtree of the node we found using preOrder.
-	// else return empty list (mark we didn't found)
-	return found ? preOrder(found) : emptyList;
+	if (found)
+	{
+		locationslist = preOrder(found, locationslist, counter, numOfVisit);
+		cout << "The search required visiting " << numOfVisit << " nodes." << endl;
+		return locationslist;
+	}
+	else// else return empty list (mark we didn't found)
+		return locationslist;// empty list
+	
 }
 
 /// <summary>
@@ -90,16 +98,30 @@ Node* Trie::searchNode(string strToSearch)
 		}
 	}
 	//if we got to here and i isn't 0 (the word isn't empty) return the node we found, else return null
-	return i ? nullptr : current;
+	return i ? current : nullptr;
 }
 
-list<int> Trie::preOrder(Node* root)
+list<int> Trie::preOrder(Node* root, list<int>& locationsList, int& numOfWords, int& numOfNodesVisit)
 {
-	//go left
-	//insert to the list
-	// if size == 3. return
-	//go right
-	return list<int>();
+	if (root == nullptr) return locationsList;
+
+	//if we got to Node that is end of word
+	if (root->endOfWord)
+	{
+		//add all the locations of this node to our locations list
+		locationsList.insert(locationsList.end(), root->startsOfWords.begin(), root->startsOfWords.end());
+		numOfWords++;
+	}
+	
+	//ran over his sons in pre order
+	map <char, Node*> myMap = root->mapOfSons;
+	for (auto it = myMap.begin(); it != myMap.end(); ++it)
+	{
+		if (numOfWords == 3) break;
+
+		preOrder(it->second, locationsList, numOfWords, ++numOfNodesVisit);
+	}
+	return locationsList;
 }
 
 	

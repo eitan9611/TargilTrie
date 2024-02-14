@@ -38,6 +38,17 @@ void Book::processContent() {
     istringstream stream(content);
     // TODO: Go over the book content and add any triplet of consecutive words to the trie.
     // Assume the words are separated by spaces.
+
+    std::istringstream iss(content);
+
+    string word;
+    while (std::getline(iss, word, ' ')) {
+        if (!word.empty()) 
+        {
+
+            tokens.push_back(word);
+        }
+    }
 }
 
 
