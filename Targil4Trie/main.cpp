@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Book.h"
 #include "Node.h"
+#include <list>
 using namespace std;
 
 int main() {
@@ -28,7 +29,7 @@ int main() {
     //    }
     //}
     map<char, Node*> myMap;
-    Node* a(false,list<int>,myMap);
-
+    list <int> a;
+    Node* a(false,a,myMap);
     return 0;
 }
