@@ -26,7 +26,7 @@ void Trie::Insert(string word, int location)
 	while (i < word.length()) //keep go for all the remaining letters 
 	{
 		//create new letter:
-		(current->mapOfSons).insert(make_pair(word[i], new Node));//create the letter and go through this letter.
+		(current->mapOfSons).insert(make_pair(word[i], new Node()));//create the letter and go through this letter.
 		auto x = current->mapOfSons.find(word[i]);
 		current = x->second;
 		i++;

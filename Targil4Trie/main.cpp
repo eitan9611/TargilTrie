@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Book.h"
 #include "Node.h"
+#include "Trie.h"
 #include <list>
 using namespace std;
 
@@ -30,6 +31,10 @@ int main() {
     //}
     map<char, Node*> myMap;
     list <int> a;
-    Node* a(false,a,myMap);
+    Node b(false,a,myMap);
+    Node* c = &b;
+    Trie k;
+    k.root = c;
+    k.Insert("stom");
     return 0;
 }
