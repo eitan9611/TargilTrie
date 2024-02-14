@@ -9,7 +9,7 @@ public:
 	bool endOfWord;
 	list<int> startsOfWords;
 	map <char, Node*> mapOfSons; //the char will contain the letter and the node will conation pointer to this letter.
-	Node(bool, map<char, Node*>, list <int>);
-};
+	Node(bool a , map<char, Node*> b , list <int> c ):endOfWord(a), startsOfWords(b), mapOfSons(c)
+}
 
 
