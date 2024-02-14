@@ -35,6 +35,6 @@ int main() {
     Node* c = &b;
     Trie k;
     k.root = c;
-    k.Insert("stom");
+    k.Insert("stom",3);
     return 0;
 }
