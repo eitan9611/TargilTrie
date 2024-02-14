@@ -133,7 +133,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Book.cpp" />
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Tain.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="Trie.cpp" />
   </ItemGroup>

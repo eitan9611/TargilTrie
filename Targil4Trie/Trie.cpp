@@ -30,4 +30,9 @@ void Trie::Insert(string word, int location)
 	current->startsOfWords.push_back(location);//assign another time that this word is being shown in the book  
 }
 
+Trie::~Trie()
+{
+
+}
+
 	
