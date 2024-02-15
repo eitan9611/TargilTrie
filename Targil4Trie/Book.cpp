@@ -39,16 +39,35 @@ void Book::processContent() {
     // TODO: Go over the book content and add any triplet of consecutive words to the trie.
     // Assume the words are separated by spaces.
 
-    std::istringstream iss(content);
+    istringstream iss(content);//treat the string 'content' as a stream (to be able to use it in the "getline" method.)
+    string sentenceToTrie="";
+    string word,removeString="",firstWord="";
+    int counterToThree = 0;
+    int place = 0,i,lengthOfFirstWord=0;
+    //save start of words.
 
-    string word;
-    while (std::getline(iss, word, ' ')) {
-        if (!word.empty()) 
+    for (i = 0; i < 3; i++)
+    {
+        getline(iss, word, ' ');
+        sentenceToTrie += word;
+        if (i == 0)
         {
-
-            tokens.push_back(word);
+            firstWord = word;  //"one"
         }
     }
+    trie.Insert(sentenceToTrie, 0);
+    int newLocation = firstWord.length() + 1;//length+space.
+    while (getline(iss, word, ' '));
+    {
+        sentenceToTrie = sentenceToTrie.substr(firstWord.length(), sentenceToTrie.length());//remove the first word from sentenceToTrie. DesignString.substr(startPos,lengthToStay)
+        lengthOfFirstWord = sentenceToTrie.find(' ');//find length of current first word 
+        firstWord = sentenceToTrie.substr(0,lengthOfFirstWord);//saves the firstWord for next rotation.
+        sentenceToTrie += " ";
+        sentenceToTrie += word;
+        trie.Insert(sentenceToTrie, newLocation);
+        newLocation = firstWord.length() + 1;
+    }
+    return;
 }
 
 
