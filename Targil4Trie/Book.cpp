@@ -36,7 +36,6 @@ Book::Book(const string& filepath) {
 
 void Book::processContent() {
     istringstream stream(content);
-    // TODO: Go over the book content and add any triplet of consecutive words to the trie.
     // Assume the words are separated by spaces.
 
     istringstream iss(content);//treat the string 'content' as a stream (to be able to use it in the "getline" method.)

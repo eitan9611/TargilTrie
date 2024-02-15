@@ -31,19 +31,9 @@ int main() {
     //}
     map<char, Node*> myMap;
     list <int> a;
-    Node b(false,a,myMap);
-    Node* c = &b;
-    Trie k;
- 
-    k.Insert("stom", 7);
-    k.Insert("stom", 12);
-    k.Insert("satum", 8);
-    k.Insert("stok", 5);
+    
+    Book b("yovel ate apple");
 
-    list<int> loc = k.search("st");
-
-    for (list<int>::iterator it = loc.begin(); it != loc.end(); it++)
-        cout << *it << " ";
 
     return 0;
 }
