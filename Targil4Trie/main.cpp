@@ -32,7 +32,7 @@ int main() {
     map<char, Node*> myMap;
     list <int> a;
     
-    Book b("yovel ate apple");
+    Book b("C:\\Users\\User\\source\\repos\\TargilTrie\\Targil4Trie\\checkText.txt");
 
 
     return 0;

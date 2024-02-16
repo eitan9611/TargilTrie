@@ -36,7 +36,6 @@ Book::Book(const string& filepath) {
 
 void Book::processContent() {
     istringstream stream(content);
-    // Assume the words are separated by spaces.
 
     istringstream iss(content);//treat the string 'content' as a stream (to be able to use it in the "getline" method.)
     string sentenceToTrie="";
@@ -49,22 +48,25 @@ void Book::processContent() {
     {
         getline(iss, word, ' ');
         sentenceToTrie += word;
+        sentenceToTrie += " ";
         if (i == 0)
         {
             firstWord = word;  //"one"
         }
     }
+    cout << sentenceToTrie << 0 << endl;
     trie.Insert(sentenceToTrie, 0);
     int newLocation = firstWord.length() + 1;//length+space.
-    while (getline(iss, word, ' '));
+    while (getline(iss, word, ' '))
     {
-        sentenceToTrie = sentenceToTrie.substr(firstWord.length(), sentenceToTrie.length());//remove the first word from sentenceToTrie. DesignString.substr(startPos,lengthToStay)
+        sentenceToTrie = sentenceToTrie.substr(firstWord.length()+1, sentenceToTrie.length());//remove the first word from sentenceToTrie. DesignString.substr(startPos,lengthToStay)
         lengthOfFirstWord = sentenceToTrie.find(' ');//find length of current first word 
         firstWord = sentenceToTrie.substr(0,lengthOfFirstWord);//saves the firstWord for next rotation.
-        sentenceToTrie += " ";
         sentenceToTrie += word;
+        sentenceToTrie += " ";
+        cout << sentenceToTrie << newLocation << endl;
         trie.Insert(sentenceToTrie, newLocation);
-        newLocation = firstWord.length() + 1;
+        newLocation += firstWord.length() + 1;
     }
     return;
 }
