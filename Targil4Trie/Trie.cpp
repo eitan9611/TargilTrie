@@ -56,28 +56,77 @@ void Trie::deleteaAll(Node* root)
 	}
 }
 
+
+
+/// this is wrapping funciton thats send the root to the recursive function.
+
+void Trie::deleteWord(string word)
+{
+	deleteWordRecursive(word, root);
+}
+
+bool Trie::deleteWordRecursive(string word, Node* root)
+{
+	//if we reached to the end of the word and the trie indeed contain this word - return true. 
+	if (word.empty())
+	{
+		if (root->endOfWord)
+		{
+			root->endOfWord = false;//mark we delete the word
+
+			if (root->mapOfSons.empty())//if this node is a leaf
+			{
+				//delete it 
+				delete root;
+				root = nullptr;
+				return true;
+			}
+		}
+		return false;//mark we didn't find the word
+	}
+
+	bool deleteSucceed;
+	auto next = root->mapOfSons.find(word[0]);
+	if (next != root->mapOfSons.end())// if we found the specifc letter in the map 
+	{
+		deleteSucceed = deleteWordRecursive(word.substr(1, word.length() - 1), next->second); //send again to the recursive function without the first letter of word
+		if (deleteSucceed)
+		{
+			root->mapOfSons.erase(word[0]); //delete the tuple that contain the node we deleted
+			
+			if (root->mapOfSons.empty())//if there is no other sons
+			{
+				//delete the current node
+				delete root;
+				root = nullptr;
+				return true;
+			}
+		}
+	}
+	return false;// mark we didn't delete the current node
+}
+
 list<int> Trie::search(string strToSearch)
 {
 	list<int> locationslist;
-	int counter = 0, numOfVisit = 1;
-	Node* found = searchNode(strToSearch);
+	int counter = 0, numOfVisit = 1;//strToSearch.length();//initalize number of nodes in the amount of characters in the str
+	Node* found = searchNode(strToSearch, numOfVisit);
 
 	//if found isn't null - get 3 words from the subtree of the node we found using preOrder.
 	if (found)
-	{
 		locationslist = preOrder(found, locationslist, counter, numOfVisit);
-		cout << "The search required visiting " << numOfVisit << " nodes." << endl;
-		return locationslist;
-	}
-	else// else return empty list (mark we didn't found)
-		return locationslist;// empty list
+
+	// else return empty list (mark we didn't found)
+	
+	cout << "The search required visiting " << numOfVisit << " nodes." << endl;
+	return locationslist;
 	
 }
 
 /// <summary>
 /// This function go through word in the trie and return the last node of the word (if exist)
 /// </summary>
-Node* Trie::searchNode(string strToSearch)
+Node* Trie::searchNode(string strToSearch, int& numOfNodesVisit)
 {
 	Node* current = this->root;
 	int i;
@@ -87,6 +136,8 @@ Node* Trie::searchNode(string strToSearch)
 		//if the current map have this letter:
 		if (current->mapOfSons.find(strToSearch[i]) != current->mapOfSons.end())
 		{
+			numOfNodesVisit++;//count in how many nodes we visited
+
 			//so go to the existing letter:
 			auto x = current->mapOfSons.find(strToSearch[i]);
 			current = x->second;

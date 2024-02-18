@@ -46,12 +46,15 @@ void Book::processContent() {
     for (i = 0; i < 3; i++)
     {
         getline(iss, word, ' ');
-        sentenceToTrie += word;
-        sentenceToTrie += " ";
         if (i == 0)
         {
             firstWord = word;  //"one"
         }
+        else
+            sentenceToTrie += " "; //add spaces start from the second word
+
+        sentenceToTrie += word;
+
     }
     trie.Insert(sentenceToTrie, 0);
     int newLocation = firstWord.length() + 1;//length+space.
@@ -60,8 +63,8 @@ void Book::processContent() {
         sentenceToTrie = sentenceToTrie.substr(firstWord.length()+1, sentenceToTrie.length());//remove the first word from sentenceToTrie. DesignString.substr(startPos,lengthToStay)
         lengthOfFirstWord = sentenceToTrie.find(' ');//find length of current first word 
         firstWord = sentenceToTrie.substr(0,lengthOfFirstWord);//saves the firstWord for next rotation.
-        sentenceToTrie += word;
         sentenceToTrie += " ";
+        sentenceToTrie += word;
         trie.Insert(sentenceToTrie, newLocation);
         newLocation += firstWord.length() + 1;
     }
@@ -73,13 +76,15 @@ void Book::searchAndPrint(const string& query) {
     // TODO: Use the trie to find the locations of the string (At most 3 sentences)
     // TODO: For each location, use the extractSentence function to extract the sentence in that location
     // TODO: Print each sentence
-    if (trie.search(query).empty()) {
+
+    list<int> locations = trie.search(query);
+    if (locations.empty()) {
         cout << "No results" << endl;
         return;
     }
     cout << "Sentences matching the prefix:" << endl;
     int i = 0;
-    for (int locate : trie.search(query))
+    for (int locate : locations)
     {
         cout << extractSentence(locate) << endl;
         i++;
@@ -140,6 +145,8 @@ string Book::extractSentence(int location) {
             break;
     }
 
+    //sentence.pop_back();//delete the last space
+
     //if we got to 10 words its mean we in middle of sentence (didn't find point)
     if (numOfWords == 10)
         sentence += "...";
@@ -148,5 +155,5 @@ string Book::extractSentence(int location) {
 }
 
 void Book::censorQuery(const string& query) {
-    //TODO: remove the query from the trie (mark it as a non end-of-word)
+    trie.deleteWord(query);
 }
