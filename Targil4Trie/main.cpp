@@ -29,10 +29,16 @@ int main() {
     //        book.censorQuery(prefix);
     //    }
     //}
-    map<char, Node*> myMap;
-    list <int> a;
+    //map<char, Node*> myMap;
+    //list <int> a;
     
-    Book b("C:\\Users\\User\\source\\repos\\TargilTrie\\Targil4Trie\\checkText.txt");
+    Book b("C:\\Users\\User\\source\\repos\\TargilTrie\\Targil4Trie\\hamlet.txt");
+    int num = 1;
+    while (num)
+    {
+        cin >> num;
+        cout << b.extractSentence(num) << endl;
+    }
 
 
     return 0;

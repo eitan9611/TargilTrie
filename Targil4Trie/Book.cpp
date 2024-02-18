@@ -35,7 +35,6 @@ Book::Book(const string& filepath) {
 }
 
 void Book::processContent() {
-    istringstream stream(content);
 
     istringstream iss(content);//treat the string 'content' as a stream (to be able to use it in the "getline" method.)
     string sentenceToTrie="";
@@ -85,11 +84,63 @@ void Book::searchAndPrint(const string& query) {
 
 }
 
+/*
+This function gets location in book and print the sentence that contain it.
+
+*/
 string Book::extractSentence(int location) {
-    // TODO: Go over the characters of the content from the location backwards until finding a '.' or until accumulating 5 words.
-    // TODO: Go over the characters of the content from the location forwards until finding a '.' or until accumulating a total of 10 words.
-    // TODO: Assemble the sentence by adding the two parts with a '*' marker for the location and '...' if the sentence was cut.
-    return nullptr;
+
+    //treat the string 'content' as a stream (to be able to use it in the "getline" method.)
+    istringstream iss(content);
+
+    int numOfWords = 0;
+    string bWwords[5], sentence = "", word;
+
+    //run backward over the characters in the string until we take 5 words or got to point.
+    for (int i = location-1; i >= 0 && numOfWords != 5; i--)
+    {
+        if (content[i] == '.')//we reached to end of sentence
+            break;
+        if (i && content[i-1] == ' ') //we reached to end of word
+        {
+            iss.seekg(i);// skipping the first 'i' characters. needed because we moving backwards
+            
+            //try get the word 
+            getline(iss, word, ' ');
+
+            if(word != "")//if we extract something - insert it to our array
+                bWwords[numOfWords++] = word;
+        }
+    }
+
+    //if we didnt got to point its mean we in middle of sentence 
+    if (numOfWords == 5)
+        sentence += "...";
+
+    //insert the words we collected to the full sentence 
+    for (int i = numOfWords; i > 0; i--)
+        sentence += bWwords[i-1] + " ";
+
+    //mark we got to our location
+    sentence += "*";
+
+    // Set the internal string buffer of iss starting from our specific position
+    iss.seekg(location);
+
+    //run forward over the characters in the string until we take 5 words or got to point.
+    while (getline(iss, word, ' '))
+    {
+        sentence += word + " "; //add the word to the complete sentence
+
+        if (word.find('.') != string::npos || ++numOfWords == 10) //if the word include the char '.' or we reached 10 words - stop extracting words
+            break;
+    }
+
+    //if we got to 10 words its mean we in middle of sentence (didn't find point)
+    if (numOfWords == 10)
+        sentence += "...";
+
+    return sentence;
 }
 
 void Book::censorQuery(const string& query) {
