@@ -53,7 +53,6 @@ void Book::processContent() {
             firstWord = word;  //"one"
         }
     }
-    cout << sentenceToTrie << 0 << endl;
     trie.Insert(sentenceToTrie, 0);
     int newLocation = firstWord.length() + 1;//length+space.
     while (getline(iss, word, ' '))
@@ -63,7 +62,6 @@ void Book::processContent() {
         firstWord = sentenceToTrie.substr(0,lengthOfFirstWord);//saves the firstWord for next rotation.
         sentenceToTrie += word;
         sentenceToTrie += " ";
-        cout << sentenceToTrie << newLocation << endl;
         trie.Insert(sentenceToTrie, newLocation);
         newLocation += firstWord.length() + 1;
     }
@@ -75,13 +73,19 @@ void Book::searchAndPrint(const string& query) {
     // TODO: Use the trie to find the locations of the string (At most 3 sentences)
     // TODO: For each location, use the extractSentence function to extract the sentence in that location
     // TODO: Print each sentence
-    list<int> locations; // TODO: fix
-    if (locations.empty()) {
+    if (trie.search(query).empty()) {
         cout << "No results" << endl;
         return;
     }
     cout << "Sentences matching the prefix:" << endl;
-
+    int i = 0;
+    for (int locate : trie.search(query))
+    {
+        cout << extractSentence(locate) << endl;
+        i++;
+        if (i == 3)
+            break;
+    };
 }
 
 /*
