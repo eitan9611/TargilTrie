@@ -1,4 +1,5 @@
 #include "Trie.h"
+#include <algorithm>
 
 Trie::Trie()
 {
@@ -117,7 +118,6 @@ list<int> Trie::search(string strToSearch)
 		locationslist = preOrder(found, locationslist, numOfVisit);
 
 	// else return empty list (mark we didn't found)
-	
 	cout << "The search required visiting " << numOfVisit << " nodes." << endl;
 	return locationslist;
 	
