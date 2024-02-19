@@ -1,5 +1,7 @@
 #pragma once
 #include "Node.h"
+#include <algorithm>
+
 class Trie
 {
 public:
