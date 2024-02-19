@@ -114,7 +114,7 @@ list<int> Trie::search(string strToSearch)
 
 	//if found isn't null - get 3 words from the subtree of the node we found using preOrder.
 	if (found)
-		locationslist = preOrder(found, locationslist, counter, numOfVisit);
+		locationslist = preOrder(found, locationslist, numOfVisit);
 
 	// else return empty list (mark we didn't found)
 	
@@ -137,7 +137,6 @@ Node* Trie::searchNode(string strToSearch, int& numOfNodesVisit)
 		if (current->mapOfSons.find(strToSearch[i]) != current->mapOfSons.end())
 		{
 			numOfNodesVisit++;//count in how many nodes we visited
-
 			//so go to the existing letter:
 			auto x = current->mapOfSons.find(strToSearch[i]);
 			current = x->second;
@@ -152,25 +151,25 @@ Node* Trie::searchNode(string strToSearch, int& numOfNodesVisit)
 	return i ? current : nullptr;
 }
 
-list<int> Trie::preOrder(Node* root, list<int>& locationsList, int& numOfWords, int& numOfNodesVisit)
+list<int> Trie::preOrder(Node* root, list<int>& locationsList, int& numOfNodesVisit)
 {
+	int locationsToAdd = 3 - locationsList.size(); //calculate how many locations missing to reach to 3
 	if (root == nullptr) return locationsList;
 
 	//if we got to Node that is end of word
 	if (root->endOfWord)
 	{
-		//add all the locations of this node to our locations list
-		locationsList.insert(locationsList.end(), root->startsOfWords.begin(), root->startsOfWords.end());
-		numOfWords++;
+		//if we still didn't collect 3 locations:
+		if(locationsToAdd > 0)
+			copy_n(root->startsOfWords.begin(), locationsToAdd, back_inserter(locationsList)); //add as many avaliable locations of this node to our locations list
 	}
 	
 	//ran over his sons in pre order
 	map <char, Node*> myMap = root->mapOfSons;
 	for (auto it = myMap.begin(); it != myMap.end(); ++it)
 	{
-		if (numOfWords == 3) break;
-
-		preOrder(it->second, locationsList, numOfWords, ++numOfNodesVisit);
+		if (locationsList.size() == 3) break;
+		preOrder(it->second, locationsList, ++numOfNodesVisit);
 	}
 	return locationsList;
 }
