@@ -106,11 +106,11 @@ string Book::extractSentence(int location) {
     string bWwords[5], sentence = "", word;
 
     //run backward over the characters in the string until we take 5 words or got to point.
-    for (int i = location-1; i >= 0 && numOfWords != 5; i--)
+    for (int i = location-1; i>=0 && numOfWords != 5; i--)
     {
         if (content[i] == '.')//we reached to end of sentence
             break;
-        if (i && content[i-1] == ' ') //we reached to end of word
+        if ((i && content[i-1] == ' ')||(i==0)) //we reached to end of word
         {
             iss.seekg(i);// skipping the first 'i' characters. needed because we moving backwards
             
